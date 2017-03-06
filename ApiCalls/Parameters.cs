@@ -55,12 +55,12 @@ namespace AppNetDotNet.ApiCalls
                 }
             }
         }
-        public bool include_machine { get; set; }
-        private string _include_machine
+        public bool include_raw { get; set; }
+        private string _include_raw
         {
             get
             {
-                if (include_machine)
+                if (include_raw)
                 {
                     return "1";
                 }
@@ -70,12 +70,12 @@ namespace AppNetDotNet.ApiCalls
                 }
             }
         }
-        public bool include_annotations { get; set; }
-        private string _include_annotations
+        public bool include_bookmarked_by { get; set; }
+        private string _include_bookmarked_by
         {
             get
             {
-                if (include_annotations)
+                if (include_bookmarked_by)
                 {
                     return "1";
                 }
@@ -85,12 +85,12 @@ namespace AppNetDotNet.ApiCalls
                 }
             }
         }
-        public bool include_starred_by { get; set; }
-        private string _include_starred_by
+        public bool include_reposted_by { get; set; }
+        private string _include_reposted_by
         {
             get
             {
-                if (include_starred_by)
+                if (include_reposted_by)
                 {
                     return "1";
                 }
@@ -100,27 +100,12 @@ namespace AppNetDotNet.ApiCalls
                 }
             }
         }
-        public bool include_reposters { get; set; }
-        private string _include_reposters
+        public bool include_user_as_id { get; set; }
+        private string _include_user_as_id
         {
             get
             {
-                if (include_reposters)
-                {
-                    return "1";
-                }
-                else
-                {
-                    return "0";
-                }
-            }
-        }
-        public bool include_user { get; set; }
-        private string _include_user
-        {
-            get
-            {
-                if (include_user)
+                if (include_user_as_id)
                 {
                     return "1";
                 }
@@ -141,11 +126,10 @@ namespace AppNetDotNet.ApiCalls
             include_deleted = true;
             // except on "My stream"
             include_directed_posts = true;
-            include_machine = false;
-            include_annotations = false;
-            include_starred_by = false;
-            include_reposters = false;
-            include_user = true;
+            include_raw = false;
+            include_bookmarked_by = false;
+            include_reposted_by = false;
+            include_user_as_id = false;
         }
 
         public string getQueryString()
@@ -163,15 +147,14 @@ namespace AppNetDotNet.ApiCalls
             {
                 queryString += "count=" + count.ToString() + "&";
             }
-            queryString += string.Format("include_muted={0}&include_deleted={1}&include_directed_posts={2}&include_machine={3}&include_annotations={4}&include_starred_by={5}&include_reposters={6}&include_user={7}", 
-                _include_muted, 
-                _include_deleted, 
-                _include_directed_posts, 
-                _include_machine, 
-                _include_annotations, 
-                _include_starred_by, 
-                _include_reposters, 
-                _include_user);
+            queryString += string.Format("include_muted={0}&include_deleted={1}&include_directed_posts={2}&include_raw={4}&include_bookmarked_by={5}&include_reposted_by={6}&include_user_as_id={7}", 
+                _include_muted,
+                _include_deleted,
+                _include_directed_posts,
+                _include_raw,
+                _include_bookmarked_by,
+                _include_reposted_by,
+                _include_user_as_id);
             return queryString;
         }
     }

@@ -78,8 +78,8 @@
     <Compile Include="ApiCalls\TextProcessor.cs" />
     <Compile Include="ApiCalls\Tokens.cs" />
     <Compile Include="ApiCalls\Users.cs" />
-    <Compile Include="Helper\Authorize new App.net account.xaml.cs">
-      <DependentUpon>Authorize new App.net account.xaml</DependentUpon>
+    <Compile Include="Helper\Authorize new pnut.io account.xaml.cs">
+      <DependentUpon>Authorize new pnut.io account.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\GetParameter.cs" />
     <Compile Include="Model\ACL.cs" />
@@ -131,7 +131,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Helper\Authorize new App.net account.xaml">
+    <Page Include="Helper\Authorize new pnut.io account.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

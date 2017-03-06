@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Not implemented on API
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,7 @@ namespace AppNetDotNet.ApiCalls
                     apiCallResponse.errorMessage = "Missing parameter access_token";
                     return new Tuple<Stream, ApiCallResponse>(stream, apiCallResponse);
                 }
-                string requestUrl = Common.baseUrl + "/stream/0/streams/" + streamId;
+                string requestUrl = Common.baseUrl + "/streams/" + streamId;
                 Dictionary<string, string> headers = new Dictionary<string, string>();
                 headers.Add("Authorization", "Bearer " + access_token);
                 Helper.Response response = Helper.SendGetRequest(requestUrl, headers);

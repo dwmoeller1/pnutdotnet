@@ -14,7 +14,6 @@ namespace AppNetDotNet.ApiCalls
 
         public static class SimpleStreams
         {
-            
             public static Tuple <List<Post>,ApiCallResponse> getUserStream(string access_token, ParametersMyStream parameter = null)
             {
                 ApiCallResponse apiCallResponse = new ApiCallResponse();
@@ -117,7 +116,7 @@ namespace AppNetDotNet.ApiCalls
         public static class Posts
         {
             
-            public static Tuple<Post,ApiCallResponse> create(string access_token, string text, string reply_to = null, List<File> toBeEmbeddedFiles = null, List<Annotation> annotations = null, Entities entities = null, int machine_only = 0, bool? parse_links = null)
+            public static Tuple<Post,ApiCallResponse> create(string access_token, string text, string reply_to = null, List<File> toBeEmbeddedFiles = null, List<Annotation> annotations = null, Entities entities = null, bool? parse_links = null)
             {
                 ApiCallResponse apiCallResponse = new ApiCallResponse();
                 Post post = new Post();
@@ -142,7 +141,6 @@ namespace AppNetDotNet.ApiCalls
                     postCreateParameters postCreateContent = new postCreateParameters();
                     postCreateContent.text = text;
                     postCreateContent.reply_to = reply_to;
-                    postCreateContent.machine_only = machine_only;
                     //postCreateContent.entities = new EntitiesWithoutAllProperty(entities);
                     //postCreateContent.annotations = annotations;
 
@@ -209,7 +207,7 @@ namespace AppNetDotNet.ApiCalls
                         apiCallResponse.errorMessage = "Missing parameter id";
                         return new Tuple<Post, ApiCallResponse>(post, apiCallResponse);
                     }
-                    string requestUrl = Common.baseUrl + "/stream/0/posts/" + id;
+                    string requestUrl = Common.baseUrl + "/posts/" + id;
                     Dictionary<string, string> headers = new Dictionary<string, string>();
                     headers.Add("Authorization", "Bearer " + access_token);
                     Helper.Response response = Helper.SendGetRequest(requestUrl, headers);
@@ -243,7 +241,7 @@ namespace AppNetDotNet.ApiCalls
                         apiCallResponse.errorMessage = "Missing parameter usernameOrId";
                         return new Tuple<List<Post>, ApiCallResponse>(posts, apiCallResponse);
                     }
-                    string requestUrl = Common.baseUrl + "/stream/0/users/" + Common.formatUserIdOrUsername(usernameOrId) + "/posts";
+                    string requestUrl = Common.baseUrl + "/users/" + Common.formatUserIdOrUsername(usernameOrId) + "/posts";
                      if(parameter != null) {
                         requestUrl = requestUrl + "?" + parameter.getQueryString();
                     }
@@ -262,7 +260,7 @@ namespace AppNetDotNet.ApiCalls
                 return new Tuple<List<Post>, ApiCallResponse>(posts, apiCallResponse);
             }
 
-            public static Tuple<List<Post>, ApiCallResponse> getRepliesById(string access_token, string id, Parameters parameter = null)
+            public static Tuple<List<Post>, ApiCallResponse> getThreadById(string access_token, string id, Parameters parameter = null)
             {
                 ApiCallResponse apiCallResponse = new ApiCallResponse();
                 List <Post> posts = new List<Post>();
@@ -280,7 +278,7 @@ namespace AppNetDotNet.ApiCalls
                         apiCallResponse.errorMessage = "Missing parameter id";
                         return new Tuple<List<Post>, ApiCallResponse>(posts, apiCallResponse);
                     }
-                    string requestUrl = Common.baseUrl + "/stream/0/posts/" + id + "/replies";
+                    string requestUrl = Common.baseUrl + "/posts/" + id + "/thread";
                      if(parameter != null) {
                         requestUrl = requestUrl + "?" + parameter.getQueryString();
                     }
@@ -319,10 +317,10 @@ namespace AppNetDotNet.ApiCalls
                         apiCallResponse.errorMessage = "Missing parameter id";
                         return new Tuple<Post, ApiCallResponse>(post, apiCallResponse);
                     }
-                    string requestUrl = Common.baseUrl + "/stream/0/posts/" + id + "/repost";
+                    string requestUrl = Common.baseUrl + "/posts/" + id + "/repost";
                     Dictionary<string, string> headers = new Dictionary<string, string>();
                     headers.Add("Authorization", "Bearer " + access_token);
-                    Helper.Response response = Helper.SendPostRequest(
+                    Helper.Response response = Helper.SendPutRequest(
                             requestUrl,
                             new
                             {
@@ -359,7 +357,7 @@ namespace AppNetDotNet.ApiCalls
                         apiCallResponse.errorMessage = "Missing parameter id";
                         return new Tuple<Post, ApiCallResponse>(post, apiCallResponse);
                     }
-                    string requestUrl = Common.baseUrl + "/stream/0/posts/" + id + "/repost";
+                    string requestUrl = Common.baseUrl + "/posts/" + id + "/repost";
                     Dictionary<string, string> headers = new Dictionary<string, string>();
                     headers.Add("Authorization", "Bearer " + access_token);
                     Helper.Response response = Helper.SendDeleteRequest(
@@ -381,7 +379,7 @@ namespace AppNetDotNet.ApiCalls
 
             #region Stars
 
-            public static Tuple<Post, ApiCallResponse> star(string access_token, string id)
+            public static Tuple<Post, ApiCallResponse> bookmark(string access_token, string id)
             {
                 ApiCallResponse apiCallResponse = new ApiCallResponse();
                 Post post = new Post();
@@ -399,10 +397,10 @@ namespace AppNetDotNet.ApiCalls
                         apiCallResponse.errorMessage = "Missing parameter id";
                         return new Tuple<Post, ApiCallResponse>(post, apiCallResponse);
                     }
-                    string requestUrl = Common.baseUrl + "/stream/0/posts/" + id + "/star";
+                    string requestUrl = Common.baseUrl + "/posts/" + id + "/bookmark";
                     Dictionary<string, string> headers = new Dictionary<string, string>();
                     headers.Add("Authorization", "Bearer " + access_token);
-                    Helper.Response response = Helper.SendPostRequest(
+                    Helper.Response response = Helper.SendPutRequest(
                             requestUrl,
                             new
                             {
@@ -421,7 +419,7 @@ namespace AppNetDotNet.ApiCalls
                 return new Tuple<Post, ApiCallResponse>(post, apiCallResponse);
             }
 
-            public static Tuple<Post, ApiCallResponse> unstar(string access_token, string id)
+            public static Tuple<Post, ApiCallResponse> unbookmark(string access_token, string id)
             {
                 ApiCallResponse apiCallResponse = new ApiCallResponse();
                 Post post = new Post();
@@ -439,7 +437,7 @@ namespace AppNetDotNet.ApiCalls
                         apiCallResponse.errorMessage = "Missing parameter id";
                         return new Tuple<Post, ApiCallResponse>(post, apiCallResponse);
                     }
-                    string requestUrl = Common.baseUrl + "/stream/0/posts/" + id + "/star";
+                    string requestUrl = Common.baseUrl + "/posts/" + id + "/bookmark";
                     Dictionary<string, string> headers = new Dictionary<string, string>();
                     headers.Add("Authorization", "Bearer " + access_token);
                     Helper.Response response = Helper.SendDeleteRequest(
@@ -477,7 +475,7 @@ namespace AppNetDotNet.ApiCalls
                         apiCallResponse.errorMessage = "Missing parameter id";
                         return new Tuple<Post, ApiCallResponse>(post, apiCallResponse);
                     }
-                    string requestUrl = Common.baseUrl + "/stream/0/posts/" + id;
+                    string requestUrl = Common.baseUrl + "/posts/" + id;
                     Dictionary<string, string> headers = new Dictionary<string, string>();
                     headers.Add("Authorization", "Bearer " + access_token);
                     Helper.Response response = Helper.SendDeleteRequest(requestUrl, headers);
@@ -499,6 +497,7 @@ namespace AppNetDotNet.ApiCalls
             /// <param name="access_token">the user access token</param>
             /// <param name="id">the id of the post to be reported</param>
             /// <returns></returns>
+            // Not implemented on API
             public static Tuple<Post, ApiCallResponse> report(string access_token, string id)
             {
                 ApiCallResponse apiCallResponse = new ApiCallResponse();
@@ -517,7 +516,7 @@ namespace AppNetDotNet.ApiCalls
                         apiCallResponse.errorMessage = "Missing parameter id";
                         return new Tuple<Post, ApiCallResponse>(post, apiCallResponse);
                     }
-                    string requestUrl = Common.baseUrl + string.Format("/stream/0/posts/{0}/report",id);
+                    string requestUrl = Common.baseUrl + string.Format("/posts/{0}/report",id); // why this here and not anywhere else?
                     Dictionary<string, string> headers = new Dictionary<string, string>();
                     headers.Add("Authorization", "Bearer " + access_token);
                     Helper.Response response = Helper.SendPostRequest(
@@ -536,7 +535,7 @@ namespace AppNetDotNet.ApiCalls
                 return new Tuple<Post, ApiCallResponse>(post, apiCallResponse);
             }
 
-            public static Tuple<List<Post>,ApiCallResponse> getStaredByUserId(string access_token, string usernameOrId, Parameters parameter = null)
+            public static Tuple<List<Post>,ApiCallResponse> getBookmarkedByUserId(string access_token, string usernameOrId, Parameters parameter = null)
             {
                 ApiCallResponse apiCallResponse = new ApiCallResponse();
                 List<Post> posts = new List<Post>();
@@ -554,7 +553,7 @@ namespace AppNetDotNet.ApiCalls
                         apiCallResponse.errorMessage = "Missing parameter username or id";
                         return new Tuple<List<Post>, ApiCallResponse>(posts, apiCallResponse);
                     }
-                    string requestUrl = Common.baseUrl + "/stream/0/users/" + Common.formatUserIdOrUsername(usernameOrId) + "/stars";
+                    string requestUrl = Common.baseUrl + "/users/" + Common.formatUserIdOrUsername(usernameOrId) + "/bookmarks";
                      if(parameter != null) {
                         requestUrl = requestUrl + "?" + parameter.getQueryString();
                     }
@@ -592,7 +591,7 @@ namespace AppNetDotNet.ApiCalls
                         apiCallResponse.errorMessage = "Missing parameter username or id";
                         return new Tuple<List<Post>, ApiCallResponse>(emptyList, apiCallResponse);
                     }
-                    string requestUrl = Common.baseUrl + "/stream/0/users/" + Common.formatUserIdOrUsername(usernameOrId) + "/mentions";
+                    string requestUrl = Common.baseUrl + "/users/" + Common.formatUserIdOrUsername(usernameOrId) + "/mentions";
                      if(parameter != null) {
                         requestUrl = requestUrl + "?" + parameter.getQueryString();
                     }
@@ -630,7 +629,7 @@ namespace AppNetDotNet.ApiCalls
                     {
                         hashtag = hashtag.TrimStart('#');
                     }
-                    string requestUrl = Common.baseUrl + "/stream/0/posts/tag/" + hashtag;
+                    string requestUrl = Common.baseUrl + "/posts/tag/" + hashtag;
                      if(parameter != null) {
                         requestUrl = requestUrl + "?" + parameter.getQueryString();
                     }
@@ -689,7 +688,7 @@ namespace AppNetDotNet.ApiCalls
 
                     string jsonString = JsonConvert.SerializeObject(toBeStoredStreamMarker);
 
-                    string requestUrl = Common.baseUrl + "/stream/0/posts/marker";
+                    string requestUrl = Common.baseUrl + "/markers";
                     Dictionary<string, string> headers = new Dictionary<string, string>();
                     headers.Add("Authorization", "Bearer " + access_token);
                     Helper.Response response =  Helper.SendPostRequestStringDataOnly(
@@ -716,7 +715,6 @@ namespace AppNetDotNet.ApiCalls
         {
             public string text { get; set; }
             public string reply_to { get; set; }
-            public int machine_only { get; set; }
             public EntitiesWithoutAllProperty entities { get; set; }
             public List<AppNetDotNet.Model.Annotations.AnnotationReplacement_File> annotations { get; set; }
         }

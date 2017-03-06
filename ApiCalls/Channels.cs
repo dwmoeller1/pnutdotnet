@@ -11,7 +11,7 @@ namespace AppNetDotNet.ApiCalls
     {
         public static Tuple<Channel, ApiCallResponse> createPM(string access_token, string type, List<Annotation> annotations, ACL readers = null, ACL writers = null)
         {
-            return create(access_token, "net.app.core.pm", annotations, readers, writers);
+            return create(access_token, "io.pnut.core.pm", annotations, readers, writers);
         }
 
         public static Tuple<Channel, ApiCallResponse> create(string access_token, string type, List<Annotation> annotations, ACL readers = null, ACL writers = null)
@@ -27,7 +27,7 @@ namespace AppNetDotNet.ApiCalls
                     return new Tuple<Channel, ApiCallResponse>(channel, apiCallResponse);
                 }
 
-                string requestUrl = Common.baseUrl + "/stream/0/channels";
+                string requestUrl = Common.baseUrl + "/channels";
 
                 channel.annotations = annotations;
                 channel.readers = readers;
@@ -80,7 +80,7 @@ namespace AppNetDotNet.ApiCalls
                     return new Tuple<Channel, ApiCallResponse>(channel, apiCallResponse);
                 }
 
-                string requestUrl = Common.baseUrl + "/stream/0/channels/" + id;
+                string requestUrl = Common.baseUrl + "/channels/" + id;
                 if (parameters != null)
                 {
                     requestUrl += "?" + parameters.getQueryString();
@@ -123,7 +123,7 @@ namespace AppNetDotNet.ApiCalls
                     return new Tuple<Channel, ApiCallResponse>(channel, apiCallResponse);
                 }
 
-                string requestUrl = Common.baseUrl + "/stream/0/channels/" + id;
+                string requestUrl = Common.baseUrl + "/channels/" + id;
 
                 channel.annotations = annotations;
                 channel.readers = readers;
@@ -173,7 +173,7 @@ namespace AppNetDotNet.ApiCalls
                         return new Tuple<List<Channel>, ApiCallResponse>(channels, apiCallResponse);
                     }
 
-                    string requestUrl = Common.baseUrl + "/stream/0/channels";
+                    string requestUrl = Common.baseUrl + "/channels";
                     if (parameters != null)
                     {
                         requestUrl += "?" + parameters.getQueryString();
@@ -216,12 +216,12 @@ namespace AppNetDotNet.ApiCalls
                         return new Tuple<Channel, ApiCallResponse>(channel, apiCallResponse);
                     }
 
-                    string requestUrl = Common.baseUrl + "/stream/0/channels/" + id + "/subscribe";
+                    string requestUrl = Common.baseUrl + "/channels/" + id + "/subscribe";
 
                     Dictionary<string, string> headers = new Dictionary<string, string>();
                     headers.Add("Authorization", "Bearer " + access_token);
                     headers.Add("X-ADN-Migration-Overrides", "response_envelope=1");
-                    Helper.Response response = Helper.SendPostRequest(
+                    Helper.Response response = Helper.SendPutRequest(
                             requestUrl,
                             new
                             {
@@ -259,7 +259,7 @@ namespace AppNetDotNet.ApiCalls
                         return new Tuple<Channel, ApiCallResponse>(channel, apiCallResponse);
                     }
 
-                    string requestUrl = Common.baseUrl + "/stream/0/channels/" + id + "/subscribe";
+                    string requestUrl = Common.baseUrl + "/channels/" + id + "/subscribe";
 
                     Dictionary<string, string> headers = new Dictionary<string, string>();
                     headers.Add("Authorization", "Bearer " + access_token);
@@ -302,7 +302,7 @@ namespace AppNetDotNet.ApiCalls
                         return new Tuple<List<User>, ApiCallResponse>(users, apiCallResponse);
                     }
 
-                    string requestUrl = Common.baseUrl + "/stream/0/channels/" + id + "/subscribers";
+                    string requestUrl = Common.baseUrl + "/channels/" + id + "/subscribers";
 
                     Dictionary<string, string> headers = new Dictionary<string, string>();
                     headers.Add("Authorization", "Bearer " + access_token);
@@ -321,46 +321,6 @@ namespace AppNetDotNet.ApiCalls
                     apiCallResponse.errorDescription = exp.StackTrace;
                 }
                 return new Tuple<List<User>, ApiCallResponse>(users, apiCallResponse);
-            }
-
-            public static Tuple<List<string>, ApiCallResponse> getSubscribersIds(string access_token, string id)
-            {
-                ApiCallResponse apiCallResponse = new ApiCallResponse();
-                List<string> users = new List<string>();
-                try
-                {
-                    if (string.IsNullOrEmpty(access_token))
-                    {
-                        apiCallResponse.success = false;
-                        apiCallResponse.errorMessage = "Missing parameter access_token";
-                        return new Tuple<List<string>, ApiCallResponse>(users, apiCallResponse);
-                    }
-                    if (string.IsNullOrEmpty(access_token))
-                    {
-                        apiCallResponse.success = false;
-                        apiCallResponse.errorMessage = "Missing parameter id";
-                        return new Tuple<List<string>, ApiCallResponse>(users, apiCallResponse);
-                    }
-
-                    string requestUrl = Common.baseUrl + "/stream/0/channels/" + id + "/subscribers/ids";
-
-                    Dictionary<string, string> headers = new Dictionary<string, string>();
-                    headers.Add("Authorization", "Bearer " + access_token);
-                    headers.Add("X-ADN-Migration-Overrides", "response_envelope=1");
-                    Helper.Response response = Helper.SendGetRequest(
-                            requestUrl,
-                            headers);
-
-                    return Helper.getData<List<string>>(response);
-
-                }
-                catch (Exception exp)
-                {
-                    apiCallResponse.success = false;
-                    apiCallResponse.errorMessage = exp.Message;
-                    apiCallResponse.errorDescription = exp.StackTrace;
-                }
-                return new Tuple<List<string>, ApiCallResponse>(users, apiCallResponse);
             }
         }
 
@@ -382,15 +342,15 @@ namespace AppNetDotNet.ApiCalls
             /// <summary>
             /// Should annotations be included in the response objects? Defaults to false.
             /// </summary>
-            public bool include_annotations { get; set; }
+            public bool include_raw { get; set; }
             /// <summary>
             /// Should User annotations be included in the response objects? Defaults to false.
             /// </summary>
-            public bool include_user_annotations { get; set; }
+            public bool include_user_raw { get; set; }
             /// <summary>
             /// Should Message annotations be included in the response objects? Defaults to false.
             /// </summary>
-            public bool include_message_annotations { get; set; }
+            public bool include_message_raw { get; set; }
 
             public string getQueryString()
             {
@@ -409,15 +369,15 @@ namespace AppNetDotNet.ApiCalls
                 }
                 if (include_annotations)
                 {
-                    queryString += "include_annotations=1&";
+                    queryString += "include_raw=1&";
                 }
                 if (include_user_annotations)
                 {
-                    queryString += "include_user_annotations=1&";
+                    queryString += "include_user_raw=1&";
                 }
                 if (include_message_annotations)
                 {
-                    queryString += "include_message_annotations=1&";
+                    queryString += "include_message_raw=1&";
                 }
                 queryString = queryString.TrimEnd('&');
                 return queryString;

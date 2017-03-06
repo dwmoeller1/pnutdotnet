@@ -15,7 +15,7 @@ namespace AppNetDotNet.ApiCalls
                 Configuration configuration = new Configuration();
                 try
                 {
-                    string requestUrl = Common.baseUrl + "/stream/0/config";
+                    string requestUrl = Common.baseUrl + "/sys/config";
 
                     Dictionary<string, string> headers = new Dictionary<string, string>();
 

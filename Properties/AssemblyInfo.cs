@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("AppNet.Net")]
-[assembly: AssemblyDescription("A complete .NET library for the App.net APO")]
+[assembly: AssemblyDescription("A complete .NET library for the pnut.io APO")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("AppNet.Net")]

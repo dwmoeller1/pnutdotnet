@@ -92,7 +92,7 @@ namespace AppNetDotNet.Model
                     break;
                 case "reply":
                 case "repost":
-                case "star":
+                case "bookmark":
                     posts = new List<Post>();
                     foreach(Newtonsoft.Json.Linq.JObject jobject in objects) {
                         Post post = JsonConvert.DeserializeObject<Post>(jobject.ToString(), settings);

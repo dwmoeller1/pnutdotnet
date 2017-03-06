@@ -19,7 +19,7 @@ namespace AppNetDotNet.Model
         public string id { get; set; }
         public string username { get; set; }
         public string name { get; set; }
-        public Description description { get; set; }
+        public Content content { get; set; }
         public List<Annotation> annotations { get; set; }
 
         public string timezone { get; set; }
@@ -56,10 +56,10 @@ namespace AppNetDotNet.Model
             public int following { get; set; }
             public int followers { get; set; }
             public int posts { get; set; }
-            public int stars { get; set; }
+            public int bookmarks { get; set; }
         }
 
-        public class Description
+        public class Content
         {
             public string text { get; set; }
             public string html { get; set; }

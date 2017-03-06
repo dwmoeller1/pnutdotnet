@@ -40,5 +40,6 @@ namespace AppNetDotNet.ApiCalls
             return new Tuple<Token, ApiCallResponse>(token, apiCallResponse);
         }
 
+        // Add DELETE /token
     }
 }

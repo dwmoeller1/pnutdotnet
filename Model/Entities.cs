@@ -17,12 +17,12 @@ namespace AppNetDotNet.Model
         public Entities()
         {
             mentions = new List<Mention>();
-            hashtags = new List<Hashtag>();
+            tags = new List<Hashtag>();
             links = new List<Link>();
         }
 
         public List<Mention> mentions { get; set; }
-        public List<Hashtag> hashtags { get; set; }
+        public List<Hashtag> tags { get; set; }
         public List<Link> links { get; set; }
         public bool? parse_links { get; set; }
         public bool? parse_markdown_links { get; set; }
@@ -46,8 +46,8 @@ namespace AppNetDotNet.Model
                             _allEntities.Add(mention);
                         }
                     }
-                    if(hashtags != null) {
-                        foreach (Hashtag hashtag in hashtags)
+                    if(tags != null) {
+                        foreach (Hashtag hashtag in tags)
                         {
                             _allEntities.Add(hashtag);
                         }
@@ -68,7 +68,7 @@ namespace AppNetDotNet.Model
 
         public class Mention : IEntity, IComparable
         {
-            public string name { get; set; }
+            public string text { get; set; }
             public string id { get; set; }
             public int pos { get; set; }
             public int len { get; set; }
@@ -92,7 +92,7 @@ namespace AppNetDotNet.Model
 
         public class Hashtag : IEntity, IComparable
         {
-            public string name { get; set; }
+            public string text { get; set; }
             public int pos { get; set; }
             public int len { get; set; }
 
@@ -117,7 +117,7 @@ namespace AppNetDotNet.Model
         public class Link : IEntity, IComparable
         {
             public string text { get; set; }
-            public string url { get; set; }
+            public string link { get; set; }
             public int pos { get; set; }
             public int len { get; set; }
 
@@ -145,14 +145,14 @@ namespace AppNetDotNet.Model
     public class EntitiesWithoutAllProperty
     {
         public List<Entities.Mention> mentions { get; set; }
-        public List<Entities.Hashtag> hashtags { get; set; }
+        public List<Entities.Hashtag> tags { get; set; }
         public List<Entities.Link> links { get; set; }
         public bool? parse_links { get; set; }
 
         public EntitiesWithoutAllProperty(Entities entities)
         {
             mentions = null;
-            hashtags = null;
+            tags = null;
             links = null;
             if (entities != null)
             {
@@ -164,11 +164,11 @@ namespace AppNetDotNet.Model
                     }
                 }
 
-                if (entities.hashtags != null)
+                if (entities.tags != null)
                 {
-                    if (entities.hashtags.Count > 0)
+                    if (entities.tags.Count > 0)
                     {
-                        hashtags = entities.hashtags;
+                        tags = entities.tags;
                     }
                 }
 

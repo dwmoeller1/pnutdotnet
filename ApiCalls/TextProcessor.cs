@@ -33,7 +33,7 @@ namespace AppNetDotNet.ApiCalls
                     apiCallResponse.errorMessage = "Missing parameter text";
                     return new Tuple<Post, ApiCallResponse>(post, apiCallResponse);
                 }
-                string requestUrl = Common.baseUrl + "/stream/0/text/process";
+                string requestUrl = Common.baseUrl + "/text/process";
                 Dictionary<string, string> headers = new Dictionary<string, string>();
                 headers.Add("Authorization", "Bearer " + access_token);
                 Helper.Response response = Helper.SendPostRequestStringDataOnly(

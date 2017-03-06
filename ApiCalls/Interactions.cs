@@ -21,7 +21,7 @@ namespace AppNetDotNet.ApiCalls
                     return new Tuple<List<Interaction>, ApiCallResponse>(interactions, apiCallResponse);
                 }
 
-                string requestUrl = Common.baseUrl + "/stream/0/users/me/interactions";
+                string requestUrl = Common.baseUrl + "/users/me/actions";
 
                 Dictionary<string, string> headers = new Dictionary<string, string>();
                 headers.Add("Authorization", "Bearer " + access_token);
