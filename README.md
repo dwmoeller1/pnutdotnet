@@ -1,4 +1,5 @@
 # pnutdotnet
 
-appnetdonnet with url changed to conform to pnut. 
-https://github.com/liGhun/AppNet.NE
+
+
+https://github.com/liGhun/AppNet.NET changed to conform to pnut.io.

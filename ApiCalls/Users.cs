@@ -74,7 +74,7 @@ namespace AppNetDotNet.ApiCalls
                 }
                 Dictionary<string, string> headers = new Dictionary<string, string>();
                 headers.Add("Authorization", "Bearer " + access_token);
-                Helper.Response response = Helper.SendPostRequest(requestUrl, new object(), headers);
+                Helper.Response response = Helper.SendPutRequest(requestUrl, new object(), headers);
 
                 return Helper.getData<User>(response);
             }
@@ -224,7 +224,7 @@ namespace AppNetDotNet.ApiCalls
                 string requestUrl = Common.baseUrl + "/users/" + Common.formatUserIdOrUsername(usernameOrId) + "/mute";
                 Dictionary<string, string> headers = new Dictionary<string, string>();
                 headers.Add("Authorization", "Bearer " + access_token);
-                Helper.Response response = Helper.SendPostRequest(requestUrl, new object(), headers);
+                Helper.Response response = Helper.SendPutRequest(requestUrl, new object(), headers);
 
                 return Helper.getData<User>(response);
             }
@@ -324,7 +324,7 @@ namespace AppNetDotNet.ApiCalls
                 string requestUrl = Common.baseUrl + "/users/" + Common.formatUserIdOrUsername(usernameOrId) + "/block";
                 Dictionary<string, string> headers = new Dictionary<string, string>();
                 headers.Add("Authorization", "Bearer " + access_token);
-                Helper.Response response = Helper.SendPostRequest(requestUrl, new object(), headers);
+                Helper.Response response = Helper.SendPutRequest(requestUrl, new object(), headers);
 
                 return Helper.getData<User>(response);
             }
@@ -441,6 +441,7 @@ namespace AppNetDotNet.ApiCalls
 
         #region Searches
 
+        // Not implemented on API
         public static Tuple<List<User>,ApiCallResponse> searchUsers(string access_token, string searchString, Parameters parameter = null)
         {
             ApiCallResponse apiCallResponse = new ApiCallResponse();
@@ -483,6 +484,7 @@ namespace AppNetDotNet.ApiCalls
 
         #region Reposters
 
+        // Different endpoint on API now
         public static Tuple<List<User>, ApiCallResponse> getRepostersOfPost(string access_token, string postId, Parameters parameter = null)
         {
             ApiCallResponse apiCallResponse = new ApiCallResponse();
@@ -525,7 +527,8 @@ namespace AppNetDotNet.ApiCalls
 
         #region Stars
 
-        public static Tuple<List<User>,ApiCallResponse> getUserWhoStarredAPost(string access_token, string postId, Parameters parameter = null)
+        // Different endpoint on API now
+        public static Tuple<List<User>,ApiCallResponse> getUserWhoBookmarkedAPost(string access_token, string postId, Parameters parameter = null)
         {
              ApiCallResponse apiCallResponse = new ApiCallResponse();
             List<User> users = new List<User>();
@@ -543,7 +546,7 @@ namespace AppNetDotNet.ApiCalls
                     apiCallResponse.errorMessage = "Missing parameter postId";
                     return new Tuple<List<User>, ApiCallResponse>(users, apiCallResponse);
                 }
-                string requestUrl = Common.baseUrl + "/posts/" + postId + "/stars";
+                string requestUrl = Common.baseUrl + "/posts/" + postId + "/bookmarks";
                 if (parameter != null)
                 {
                     requestUrl += "?" + parameter.getQueryString();

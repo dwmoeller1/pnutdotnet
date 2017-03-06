@@ -57,6 +57,7 @@ namespace AppNetDotNet
         {
             if (!initialLogoutCompleted)
             {
+                // wrong URL. what's happening here?
                 webBrowserAuthorization.Navigate("https://pnut.io/logout/");
             }
             else

@@ -11,7 +11,7 @@ namespace AppNetDotNet.Model
         public string type { get; set; }
         public Counts counts { get; set; }
         public User owner { get; set; }
-        public List<Annotation> annotations { get; set; }
+        public List<Annotation> raw { get; set; }
         public ACL readers { get; set; }
         public ACL writers { get; set; }
         public bool you_subscribed { get; set; }

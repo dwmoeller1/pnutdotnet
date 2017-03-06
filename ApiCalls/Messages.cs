@@ -9,9 +9,9 @@ namespace AppNetDotNet.ApiCalls
 {
     public class Messages
     {
-        public static Tuple<Message, ApiCallResponse> createPrivateMessage(string access_token, string text, List<string> receipientUsersnameOrIds, string reply_to = null, List<Annotation> annotations = null, Entities entities = null, int machineOnly = 0, bool? parse_links = null, List<File> toBeEmbeddedFiles = null)
+        public static Tuple<Message, ApiCallResponse> createPrivateMessage(string access_token, string text, List<string> receipientUsersnameOrIds, string reply_to = null, List<Annotation> annotations = null, Entities entities = null, bool? parse_links = null, List<File> toBeEmbeddedFiles = null)
         {
-            return create(access_token, text, "pm", receipientUsersnameOrIds, reply_to:reply_to, annotations:annotations, entities:entities, machineOnly:machineOnly, parse_links:parse_links, toBeEmbeddedFiles:toBeEmbeddedFiles);
+            return create(access_token, text, "pm", receipientUsersnameOrIds, reply_to:reply_to, annotations:annotations, entities:entities, parse_links:parse_links, toBeEmbeddedFiles:toBeEmbeddedFiles);
         }
 
         public static Tuple<Message, ApiCallResponse> create(
@@ -21,8 +21,7 @@ namespace AppNetDotNet.ApiCalls
             List<string> receipientUsersnameOrIds, 
             string reply_to = null, 
             List<Annotation> annotations = null, 
-            Entities entities = null, 
-            int machineOnly = 0, 
+            Entities entities = null,
             bool? parse_links = true,
             bool? parse_markdown_links = true,
             List<File> toBeEmbeddedFiles = null)
@@ -37,7 +36,7 @@ namespace AppNetDotNet.ApiCalls
                     apiCallResponse.errorMessage = "Missing parameter access_token";
                     return new Tuple<Message, ApiCallResponse>(message, apiCallResponse);
                 }
-                if (string.IsNullOrEmpty(text) && machineOnly == 0)
+                if (string.IsNullOrEmpty(text))
                 {
                     apiCallResponse.success = false;
                     apiCallResponse.errorMessage = "Missing parameter text";
@@ -52,16 +51,16 @@ namespace AppNetDotNet.ApiCalls
                 string requestUrl = Common.baseUrl;
                 if (channelId.ToLower() == "pm")
                 {
-                    requestUrl += "/stream/0/channels/pm/messages";
+                    requestUrl += "/channels/pm/messages";
                 }
                 else
                 {
-                    requestUrl += "/stream/0/channels/" + channelId + "/messages";
+                    requestUrl += "/channels/" + channelId + "/messages";
                 }
 
                 if(entities == null && (parse_links != null || parse_markdown_links != null)) {
                     entities = new Entities();
-                    entities.hashtags = null;
+                    entities.tags = null;
                     entities.links = null;
                     entities.mentions = null;
                 }
@@ -76,7 +75,6 @@ namespace AppNetDotNet.ApiCalls
                 messageContent.text = text;
                 messageContent.reply_to = reply_to;
                 messageContent.entities = entities;
-                messageContent.machine_only = machineOnly;
                 messageContent.destinations = receipientUsersnameOrIds;
 
                 if (toBeEmbeddedFiles != null)
@@ -163,7 +161,7 @@ namespace AppNetDotNet.ApiCalls
                     return new Tuple<Message, ApiCallResponse>(message, apiCallResponse);
                 }
 
-                string requestUrl = Common.baseUrl + "/stream/0/channels/" + channelId + "/messages/" + messageId;
+                string requestUrl = Common.baseUrl + "/channels/" + channelId + "/messages/" + messageId;
 
                 Dictionary<string, string> headers = new Dictionary<string, string>();
                 headers.Add("Authorization", "Bearer " + access_token);
@@ -209,7 +207,7 @@ namespace AppNetDotNet.ApiCalls
                         return new Tuple<Message, ApiCallResponse>(message, apiCallResponse);
                     }
 
-                    string requestUrl = Common.baseUrl + "/stream/0/channels/" + channelId + "/messages/" + messageId;
+                    string requestUrl = Common.baseUrl + "/channels/" + channelId + "/messages/" + messageId;
 
                     Dictionary<string, string> headers = new Dictionary<string, string>();
                     headers.Add("Authorization", "Bearer " + access_token);
@@ -251,7 +249,7 @@ namespace AppNetDotNet.ApiCalls
                     }
 
                     
-                    string requestUrl = Common.baseUrl + "/stream/0/channels/" + channelId + "/messages";
+                    string requestUrl = Common.baseUrl + "/channels/" + channelId + "/messages";
 
                     if (parameters != null)
                     {
@@ -287,25 +285,21 @@ namespace AppNetDotNet.ApiCalls
             /// </summary>
             public bool include_deleted { get; set; }
             /// <summary>
-            /// Should machine only Messages be included? Defaults to false.
-            /// </summary>
-            public bool include_machine { get; set; }
-            /// <summary>
             /// Should annotations be included in the response objects? Defaults to false.
             /// </summary>
-            public bool include_annotations { get; set; }
+            public bool include_raw { get; set; }
             /// <summary>
             /// Should User annotations be included in the response objects? Defaults to false.
             /// </summary>
-            public bool include_user_annotations { get; set; }
+            public bool include_user_raw { get; set; }
             /// <summary>
             /// Should Message annotations be included in the response objects? Defaults to false.
             /// </summary>
-            public bool include_message_annotations { get; set; }
+            public bool include_message_raw { get; set; }
 
             public messageParameters()
             {
-                include_annotations = true;
+                include_raw = true;
             }
 
             public string getQueryString()
@@ -319,21 +313,17 @@ namespace AppNetDotNet.ApiCalls
                 {
                     queryString += "include_deleted=1&";
                 }
-                if (include_machine)
-                {
-                    queryString += "include_machine=1&";
-                }
                 if (include_annotations)
                 {
-                    queryString += "include_annotations=1&";
+                    queryString += "include_raw=1&";
                 }
                 if (include_user_annotations)
                 {
-                    queryString += "include_user_annotations=1&";
+                    queryString += "include_user_raw=1&";
                 }
                 if (include_message_annotations)
                 {
-                    queryString += "include_message_annotations=1&";
+                    queryString += "include_message_raw=1&";
                 }
                 queryString = queryString.TrimEnd('&');
                 return queryString;
@@ -344,7 +334,6 @@ namespace AppNetDotNet.ApiCalls
         {
             public string text { get; set; }
             public string reply_to { get; set; }
-            public int machine_only { get; set; }
             public Entities entities { get; set; }
             public List<Annotation.JSON_body> annotations { get; set; }
             // public List<AppNetDotNet.Model.Annotations.AnnotationReplacement_File> annotations { get; set; }

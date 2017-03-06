@@ -31,10 +31,9 @@ namespace AppNetDotNet.Model
         public string reply_to { get; set; }
         public string thread_id { get; set; }
         public int num_replies { get; set; }
-        public List<Annotation> annotations { get; set; }
+        public List<Annotation> raw { get; set; }
         public Entities entities { get; set; }
         public bool is_deleted { get; set; }
-        public bool machine_only { get; set; }
         public List<string> destinations { get; set; }
 
         public override string ToString()

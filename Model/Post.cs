@@ -69,7 +69,7 @@ namespace AppNetDotNet.Model
         /// </summary>
         public int num_replies { get; set; }
         /// <summary>
-        /// The number of users who have starred this post.
+        /// The number of users who have bookmarked this post.
         /// </summary>
         public int num_stars { get; set; }
         /// <summary>
@@ -79,7 +79,7 @@ namespace AppNetDotNet.Model
         /// <summary>
         /// Metadata about the entire post. See the Annotations documentation.
         /// </summary>
-        public List<Annotation> annotations { get; set; }
+        public List<Annotation> raw { get; set; }
         /// <summary>
         /// Rich text information for this post. See the Entities documentation.
         /// </summary>
@@ -89,25 +89,21 @@ namespace AppNetDotNet.Model
         /// </summary>
         public bool is_deleted { get; set; }
         /// <summary>
-        /// Is this Post meant for humans or other apps? See Machine only Posts for more information.
+        /// Have you bookmarked this Post? May be omitted if this is not an authenticated request.
         /// </summary>
-        public bool machine_only { get; set; }
+        public bool you_bookmarked { get; set; }
         /// <summary>
-        /// Have you starred this Post? May be omitted if this is not an authenticated request.
+        /// A partial list of users who have bookmarked this post. This is not comprehensive and is meant to be a sample of users who have bookmarked this post giving preference to users the current user follows. This is only included if include_bookmarked_by=1 is passed to pnut.io. May be omitted if this is not an authenticated request.
         /// </summary>
-        public bool you_starred { get; set; }
-        /// <summary>
-        /// A partial list of users who have starred this post. This is not comprehensive and is meant to be a sample of users who have starred this post giving preference to users the current user follows. This is only included if include_starred_by=1 is passed to App.net. May be omitted if this is not an authenticated request.
-        /// </summary>
-        public List<User> starred_by { get; set; }
+        public List<User> bookmarked_by { get; set; }
         /// <summary>
         /// Have you reposted this Post? May be omitted if this is not an authenticated request.
         /// </summary>
         public bool you_reposted { get; set; }
         /// <summary>
-        /// A partial list of users who have reposted this post. This is not comprehensive and is meant to be a sample of users who have starred this post giving preference to users the current user follows. This is only included if include_reposters=1 is passed to App.net. May be omitted if this is not an authenticated request.
+        /// A partial list of users who have reposted this post. This is not comprehensive and is meant to be a sample of users who have reposted this post giving preference to users the current user follows. This is only included if include_reposted_by=1 is passed to pnut.io. May be omitted if this is not an authenticated request.
         /// </summary>
-        public List<User> reposters { get; set; }
+        public List<User> reposted_by { get; set; }
         /// <summary>
         /// If this post is a repost, this key will contain the complete original Post.
         /// </summary>
