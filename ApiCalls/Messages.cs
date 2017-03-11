@@ -313,15 +313,15 @@ namespace AppNetDotNet.ApiCalls
                 {
                     queryString += "include_deleted=1&";
                 }
-                if (include_annotations)
+                if (include_raw)
                 {
                     queryString += "include_raw=1&";
                 }
-                if (include_user_annotations)
+                if (include_user_raw)
                 {
                     queryString += "include_user_raw=1&";
                 }
-                if (include_message_annotations)
+                if (include_message_raw)
                 {
                     queryString += "include_message_raw=1&";
                 }

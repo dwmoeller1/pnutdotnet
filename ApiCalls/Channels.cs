@@ -29,7 +29,7 @@ namespace AppNetDotNet.ApiCalls
 
                 string requestUrl = Common.baseUrl + "/channels";
 
-                channel.annotations = annotations;
+                channel.raw = annotations;
                 channel.readers = readers;
                 channel.writers = writers;
                 channel.type = type;
@@ -125,7 +125,7 @@ namespace AppNetDotNet.ApiCalls
 
                 string requestUrl = Common.baseUrl + "/channels/" + id;
 
-                channel.annotations = annotations;
+                channel.raw = annotations;
                 channel.readers = readers;
                 channel.writers = writers;
 
@@ -220,7 +220,7 @@ namespace AppNetDotNet.ApiCalls
 
                     Dictionary<string, string> headers = new Dictionary<string, string>();
                     headers.Add("Authorization", "Bearer " + access_token);
-                    headers.Add("X-ADN-Migration-Overrides", "response_envelope=1");
+                    //headers.Add("X-ADN-Migration-Overrides", "response_envelope=1");
                     Helper.Response response = Helper.SendPutRequest(
                             requestUrl,
                             new
@@ -367,15 +367,15 @@ namespace AppNetDotNet.ApiCalls
                 {
                     queryString += "include_recent_message=1&";
                 }
-                if (include_annotations)
+                if (include_raw)
                 {
                     queryString += "include_raw=1&";
                 }
-                if (include_user_annotations)
+                if (include_user_raw)
                 {
                     queryString += "include_user_raw=1&";
                 }
-                if (include_message_annotations)
+                if (include_message_raw)
                 {
                     queryString += "include_message_raw=1&";
                 }

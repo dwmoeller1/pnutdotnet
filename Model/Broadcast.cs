@@ -22,9 +22,9 @@ namespace AppNetDotNet.Model
 
                 if (channel != null)
                 {
-                    if (channel.annotations != null)
+                    if (channel.raw != null)
                     {
-                        foreach (Annotation annotation in channel.annotations)
+                        foreach (Annotation annotation in channel.raw)
                         {
                             switch (annotation.type)
                             {
@@ -64,9 +64,9 @@ namespace AppNetDotNet.Model
                 if (message != null)
                 {
                     this.text = message.text;
-                    if (message.annotations != null)
+                    if (message.raw != null)
                     {
-                        foreach (Annotation annotation in message.annotations)
+                        foreach (Annotation annotation in message.raw)
                         {
                             switch (annotation.type)
                             {
