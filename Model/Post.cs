@@ -10,9 +10,9 @@ namespace AppNetDotNet.Model
     {
         public override string ToString()
         {
-            if (user != null && text != null)
+            if (user != null && content != null)
             {
-                return user.ToString() + ": " +  text;
+                return user.ToString() + ": " +  content.text;
             }
             return "Incomplete post";
         }
@@ -39,15 +39,8 @@ namespace AppNetDotNet.Model
                 _created_at = value.ToLocalTime();
             }
         }
-        /// <summary>
-        /// User supplied text of the post.
-        /// </summary>
         private DateTime _created_at { get; set; }
-        public string text { get; set; }
-        /// <summary>
-        /// Server-generated annotated HTML rendering of post text.
-        /// </summary>
-        public string html { get; set; }
+        public Content content { get; set; }
         /// <summary>
         /// the client having sent this post
         /// </summary>
@@ -80,10 +73,6 @@ namespace AppNetDotNet.Model
         /// Metadata about the entire post. See the Annotations documentation.
         /// </summary>
         public List<Annotation> raw { get; set; }
-        /// <summary>
-        /// Rich text information for this post. See the Entities documentation.
-        /// </summary>
-        public Entities entities { get; set; }
         /// <summary>
         /// Has this post been deleted? For non-deleted posts, this key may be omitted instead of being false. If a post has been deleted, the text, html, and entities properties will be empty and may be omitted.
         /// </summary>
@@ -123,6 +112,23 @@ namespace AppNetDotNet.Model
             /// The public client_id of the API consumer that created this post.
             /// </summary>
             public string client_id { get; set; }
+        }
+
+        public class Content
+        {
+            /// <summary>
+            /// User supplied text of the post.
+            /// </summary>
+            public string text { get; set; }
+            /// <summary>
+            /// Server-generated annotated HTML rendering of post text.
+            /// </summary>
+            public string html { get; set; }
+            /// <summary>
+            /// Rich text information for this post. See the Entities documentation.
+            /// </summary>
+            public Entities entities { get; set; }
+            public bool links_not_parsed { get; set; }
         }
 
         

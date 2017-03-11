@@ -147,7 +147,7 @@ namespace AppNetDotNet.ApiCalls
             {
                 queryString += "count=" + count.ToString() + "&";
             }
-            queryString += string.Format("include_muted={0}&include_deleted={1}&include_directed_posts={2}&include_raw={4}&include_bookmarked_by={5}&include_reposted_by={6}&include_user_as_id={7}", 
+            queryString += string.Format("include_muted={0}&include_deleted={1}&include_directed_posts={2}&include_raw={3}&include_bookmarked_by={4}&include_reposted_by={5}&include_user_as_id={6}", 
                 _include_muted,
                 _include_deleted,
                 _include_directed_posts,
