@@ -48,7 +48,7 @@ namespace AppNetDotNet
             webBrowserAuthorization.Navigating += webBrowserAuthorization_Navigating;
 
             webBrowserAuthorization.Navigated += webBrowserAuthorization_Navigated;
-            authUrl = string.Format("https://pnut.io/oauth/authenticate?client_id={0}&response_type=token&redirect_uri={1}&scope={2}&state={3}", System.Web.HttpUtility.UrlEncode("NS2HhwYYsL5XPRIWrZZLAaglKygc1h9B"), System.Web.HttpUtility.UrlEncode(redirectUrl), System.Web.HttpUtility.UrlEncode(scope), System.Web.HttpUtility.UrlEncode(state));
+            authUrl = string.Format("https://pnut.io/oauth/authenticate?client_id={0}&response_type=token&redirect_uri={1}&scope={2}&state={3}", System.Web.HttpUtility.UrlEncode(clientId), System.Web.HttpUtility.UrlEncode(redirectUrl), System.Web.HttpUtility.UrlEncode(scope), System.Web.HttpUtility.UrlEncode(state));
 
 
         }
