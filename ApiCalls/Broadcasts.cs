@@ -26,7 +26,7 @@ namespace AppNetDotNet.ApiCalls
         {
             Channels.channelParameters parameters = new Channels.channelParameters();
             parameters.channel_types = "net.app.core.broadcast";
-            parameters.include_annotations = true;
+            parameters.include_raw = true;
             Tuple<List<Channel>, ApiCallResponse> channels = Channels.Subscriptions.getOfCurrentUser(access_token, parameters);
             if (channels.Item2.success)
             {
@@ -48,7 +48,7 @@ namespace AppNetDotNet.ApiCalls
         {
             Channels.channelParameters parameters = new Channels.channelParameters();
             parameters.channel_types = "net.app.core.broadcast";
-            parameters.include_annotations = true;
+            parameters.include_raw = true;
             Tuple<Channel,ApiCallResponse> channel = Channels.get(access_token, id);
             if (channel.Item2.success)
             {
@@ -67,9 +67,9 @@ namespace AppNetDotNet.ApiCalls
         {
             List<Broadcast.Broadcast_Message> broadcasts = new List<Broadcast.Broadcast_Message>();
             Messages.messageParameters parameters = new Messages.messageParameters();
-            parameters.include_message_annotations = true;
-            parameters.include_annotations = true;
-            parameters.include_user_annotations = true;
+            parameters.include_message_raw = true;
+            parameters.include_raw = true;
+            parameters.include_user_raw = true;
             Tuple<List<Message>, ApiCallResponse> entries = AppNetDotNet.ApiCalls.Messages.getMessagesInChannel(accessToken, channelId, parameters);
             if (entries.Item2.success)
             {
@@ -109,7 +109,7 @@ namespace AppNetDotNet.ApiCalls
             {
                 machine_only = 0;
             }
-            return Messages.create(access_token, text, channel_id, null, annotations: annotations, machineOnly: machine_only, parse_links: true,
+            return Messages.create(access_token, text, channel_id, null, annotations: annotations, parse_links: true,
                 parse_markdown_links: true, toBeEmbeddedFiles: toBeEmbeddedFiles);
         }
     }
